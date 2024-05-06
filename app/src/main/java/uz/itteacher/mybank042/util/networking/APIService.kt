@@ -15,7 +15,7 @@ interface APIService {
     suspend fun getAllCards(): List<Card>
 
     @GET("/cards")
-    suspend fun getCardByPhoneNumber(@Query("phone_number") phoneNumber: String)
+    suspend fun getCardByPhoneNumber(@Query("phone_number") phoneNumber: String): Card
 
     @GET("/transactions/")
     suspend fun getAllTransactions(): List<Transaction>

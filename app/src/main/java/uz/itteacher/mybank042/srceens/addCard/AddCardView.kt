@@ -1,5 +1,6 @@
 package uz.itteacher.mybank042.srceens.addCard
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -29,11 +31,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import uz.itteacher.mybank042.R
+import uz.itteacher.mybank042.models.Card
+import kotlin.math.log
 
 @Composable
 fun AddCardView(vm: AddCardViewModel, navHostController: NavHostController) {
-    var carnumber by remember {
+    var number by remember {
         mutableStateOf("")
+    }
+    var cards = remember {
+        listOf<Card>()
     }
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -65,9 +72,9 @@ fun AddCardView(vm: AddCardViewModel, navHostController: NavHostController) {
                 .padding(horizontal = 32.dp)
         ) {
             TextField(
-                value = carnumber,
+                value = number,
                 onValueChange = {
-                    carnumber = it
+                    number = it
                 },
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth(),
@@ -78,13 +85,19 @@ fun AddCardView(vm: AddCardViewModel, navHostController: NavHostController) {
                     )
                 },
                 placeholder = {
-                    Text(text = "XXXX XXXX XXXX XXXX")
+                    Text(text = "+998 90 123 45 67")
                 }
             )
         }
+        if (vm.getAllCard() != null) {
+            cards = vm.getAllCard()!!.collectAsState().value
+            for (i in cards.indices) {
+                Log.d("Card", cards[i].name)
+            }
+        }
         Button(
             onClick = {
-                navHostController.navigate("cards_screen")
+//                navHostController.navigate("cards_screen")
             },
             modifier = Modifier
                 .padding(horizontal = 32.dp)
