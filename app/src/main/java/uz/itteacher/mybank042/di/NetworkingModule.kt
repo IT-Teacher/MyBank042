@@ -15,7 +15,7 @@ class NetworkingModule {
 
     @Provides
     @Singleton
-    fun baseUrl():String = "https://ictschool.pythonanywhere.com/"
+    fun baseUrl():String = "https://ictschool.pythonanywhere.com"
 
 
     @Provides

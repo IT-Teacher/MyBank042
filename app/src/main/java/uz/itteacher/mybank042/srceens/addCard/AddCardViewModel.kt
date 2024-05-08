@@ -3,18 +3,30 @@ package uz.itteacher.mybank042.srceens.addCard
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import uz.itteacher.mybank042.models.Card
+import uz.itteacher.mybank042.models.CheckCode
+import uz.itteacher.mybank042.models.Response
+import uz.itteacher.mybank042.models.SendCode
 import javax.inject.Inject
 
 @HiltViewModel
 class AddCardViewModel @Inject constructor(var model: AddCardModel): ViewModel() {
-    private var cards: StateFlow<List<Card>>? = null
-    fun getAllCard(): StateFlow<List<Card>>? {
+
+    fun check(checkCode: CheckCode):Response{
+        var response = Response("")
         viewModelScope.launch {
-            cards = model.getAllCards()
+            response = model.checkCode(checkCode)
         }
-        return cards
+        return response
     }
+
+    fun send(sendCode: SendCode): Response {
+        var response = Response("")
+        viewModelScope.launch {
+            response = model.sendCode(sendCode)
+        }
+        return response
+
+    }
+
 }
